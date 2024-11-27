@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Monitor</title>
+    <style>
+        /* CSS Variables for theming */
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --accent-blue: #3b82f6;
+            --accent-red: #ef4444;
+            --accent-green: #22c55e;
+            --accent-purple: #8b5cf6;
+            --progress-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dark theme */
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --border-color: #2d3545;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .logo {
+            color: var(--accent-green);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .nav-item {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 0.75rem 0;
+            transition: color 0.3s;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background-color: var(--bg-card);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .optimal-range {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background-color: var(--progress-bg);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 70%;
+            border-radius: 2px;
+        }
+
+        .progress-bar-fill.blue { background-color: var(--accent-blue); }
+        .progress-bar-fill.red { background-color: var(--accent-red); }
+        .progress-bar-fill.green { background-color: var(--accent-green); }
+        .progress-bar-fill.purple { background-color: var(--accent-purple); }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .status-text {
+            margin: 1rem 0;
+        }
+
+        .status-description {
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">Water Monitor</div>
+            <nav>
+                <a href="/dashboard.html" class="nav-item">Dashboard</a>
+                <a href="/sensors.html" class="nav-item">Sensors</a>
+                <a href="/reports.html" class="nav-item">Reports</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1>Dashboard</h1>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-title">Water pH</div>
+                    <div class="metric-value">7.2</div>
+                    <div class="optimal-range">Optimal range: 6.0 - 7.0</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill blue" style="width: 80%;"></div>
+                    </div>
+                </div>
+    
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="2">
+                            <path d="M12 2v20M2 12h20"></path>
+                        </svg>
+                        <h3>Temperature</h3>
+                    </div>
+                    <div class="metric-value">22°C</div>
+                    <div class="optimal-range">Optimal range: 18°C - 24°C</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="background-color: var(--accent-red); width: 75%"></div>
+                    </div>
+                </div>
+    
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                        <h3>Dissolved Oxygen</h3>
+                    </div>
+                    <div class="metric-value">8.5 mg/L</div>
+                    <div class="optimal-range">Optimal range: 6 - 8 mg/L</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="background-color: var(--accent-green); width: 85%"></div>
+                    </div>
+                </div>
+    
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2">
+                            <path d="M3 3v18h18"></path>
+                            <path d="M18 17V9"></path>
+                            <path d="M13 17V5"></path>
+                            <path d="M8 17v-3"></path>
+                        </svg>
+                        <h3>EC</h3>
+                    </div>
+                    <div class="metric-value">1.5 mS/cm</div>
+                    <div class="optimal-range">Optimal range: 1.2 - 1.8 mS/cm</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="background-color: var(--accent-purple); width: 65%"></div>
+                    </div>
+                </div>
+    
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2">
+                            <path d="M12 3v18M3 12h18"></path>
+                        </svg>
+                        <h3>Turbidity</h3>
+                    </div>
+                    <div class="metric-value">1.2 NTU</div>
+                    <div class="optimal-range">Optimal range: 0 - 5 NTU</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="background-color: #ffd700; width: 25%"></div>
+                    </div>
+                </div>
+    
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4299e1" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <h3>Nitrogen</h3>
+                    </div>
+                    <div class="metric-value">150 ppm</div>
+                    <div class="optimal-range">Optimal range: 100 - 200 ppm</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="background-color: #4299e1; width: 50%"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="metric-card">
+                <div class="metric-header">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <h3>Water Quality Status</h3>
+                </div>
+                <div class="status-text" style="color: var(--accent-green); font-size: 1.5rem; font-weight: bold;">
+                    Excellent
+                </div>
+                <div class="status-description" style="color: var(--text-secondary)">
+                    All parameters are within optimal ranges for lettuce growth.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+        }
+
+        // Set initial theme based on user preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+</body>
+</html>
