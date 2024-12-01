@@ -1,0 +1,5 @@
+Django==3.2.10
+djangorestframework==3.12.4
+pyserial==3.5
+joblib==1.1.0
+scikit-learn==0.24.2
