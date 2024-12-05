@@ -7,11 +7,13 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^1.0.6",
-    "axios": "^1.7.8",
+    "axios": "^1.7.9",
     "core-js": "^3.8.3",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
+    "lucide-vue-next": "^0.465.0",
     "register-service-worker": "^1.7.2",
     "vue": "^3.2.13",
     "vue-good-table-next": "^0.2.2",
