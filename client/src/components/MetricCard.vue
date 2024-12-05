@@ -10,7 +10,7 @@
     <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
       <div
         class="h-full rounded-full transition-all duration-300 ease-in-out"
-        :class="`bg-${metric.color}-500`"
+        :class="statusColor"  
         :style="{ width: `${calculatePercentage(metric.value, metric.optimalRange)}%` }"
       ></div>
     </div>
@@ -35,9 +35,8 @@ const calculatePercentage = (value, range) => {
 
 const statusColor = computed(() => {
   const percentage = calculatePercentage(props.metric.value, props.metric.optimalRange)
-  if (percentage < 25 || percentage > 75) return 'bg-red-500'
-  if (percentage < 40 || percentage > 60) return 'bg-yellow-500'
-  return 'bg-green-500'
+  if (percentage < 25 || percentage > 75) return 'bg-red-500' // Red for outside range
+  if (percentage < 40 || percentage > 60) return 'bg-yellow-500' // Yellow for warning range
+  return 'bg-green-500' // Green for optimal range
 })
 </script>
-
